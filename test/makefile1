@@ -1,0 +1,33 @@
+# Update these paths to match your installation
+# You may also need to update the linker option rpath, which sets where to look for
+# the SDL2 libraries at runtime to match your install
+
+SDL_INC = -I/usr/include/SDL2
+SDL_GFX_INC = -I/home/ubuntu/Downloads/SDL2_gfx-1.0.4
+
+# You may need to change -std=c++11 to -std=c++0x if your compiler is a bit older
+CXXFLAGS += $(SDL_INC)
+CXXFLAGS += $(SDL_GFX_INC)
+CXXFLAGS += -Wall -std=c++11 
+CXXFLAGS += -DPC_UBUNTU
+
+LIBS= -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx
+
+############################# targets section ################################
+
+OBJS = SDL_main.o handler.o button_defs.o launch.o kypsennys.o jaahdytys.o kotinakyma.o can_thread.o var.o tekstit.o button_group.o \
+       numpad.o image.o kallistus_nap.o kettle_functions.o iotest.o kyps_icons.o sek_tapa_valinta.o valmis.o ok_cancel.o yla_kuvat.o \
+       prof_vaihto.o numpad_pieni.o dropdown_group.o mixer.o ohjelmat.o omat_ohjelmat.o uusi_ohjelma.o keypad.o vaiheiden_luonti.o \
+       cook_prog.o listaa_kansio.o sqlite_thread.o update_thread.o nayta_ohj_vaiheet.o syota_aloita_tiedot.o \
+       comp_options.o       
+
+all: demo_pc
+
+######################### Makefile.rules section #############################
+
+######################## Tools targets section ###############################
+
+######################## Tools targets section ###############################
+
+demo_pc: $(OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS) -o $@ $(LIBS)

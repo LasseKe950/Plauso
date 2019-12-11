@@ -1,0 +1,51 @@
+# Update these paths to match your installation
+# You may also need to update the linker option rpath, which sets where to look for
+# the SDL2 libraries at runtime to match your install
+
+SDL_LIBS = /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon-mx6qdl/libsdl2/usr/lib/libSDL2.so \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/libsdl2-image/usr/lib/libSDL2_image.so \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon-mx6qdl/libsdl2-ttf/usr/lib/libSDL2_ttf.so \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/libsdl2-gfx/usr/lib/libSDL2_gfx.so \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/tiff/usr/lib/libtiff.so \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/libpng/usr/lib/libpng16.so.16 \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/libjpeg-turbo/usr/lib/libjpeg.so.62 \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/zlib/lib/libz.so.1 \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/freetype/usr/lib/libfreetype.so.6 \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/xz/usr/lib/liblzma.so.5 \
+          /home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/sqlite3/usr/lib/libsqlite3.so \
+          -Wl,-rpath=/usr/lib
+
+SDL_INC = -I/home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon-mx6qdl/libsdl2/usr/include/SDL2 \
+          -I/home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/libsdl2-image/usr/include/SDL2 \
+          -I/home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon-mx6qdl/libsdl2-ttf/usr/include/SDL2 \
+          -I/home/ubuntu/var-fslc-yocto/build_x11/tmp/sysroots-components/armv7at2hf-neon/sqlite3/usr/include \
+          
+SDL_GFX_INC = -I/home/ubuntu/Downloads/SDL2_gfx-1.0.4
+
+# You may need to change -std=c++11 to -std=c++0x if your compiler is a bit older
+CXXFLAGS += $(SDL_INC)
+CXXFLAGS += $(SDL_GFX_INC)
+CXXFLAGS += -Wall -std=c++11 
+CXXFLAGS += -DPC_UBUNTU
+#CXXFLAGS += -DTESTIPADAN_NAYTTO
+
+# LIBS= -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_gfx
+
+############################# targets section ################################
+
+OBJS = SDL_main.o handler.o button_defs.o launch.o kypsennys.o jaahdytys.o kotinakyma.o can_thread.o var.o tekstit.o button_group.o \
+       numpad.o image.o kallistus_nap.o kettle_functions.o iotest.o kyps_icons.o sek_tapa_valinta.o valmis.o ok_cancel.o yla_kuvat.o \
+       prof_vaihto.o numpad_pieni.o dropdown_group.o mixer.o ohjelmat.o omat_ohjelmat.o uusi_ohjelma.o keypad.o vaiheiden_luonti.o \
+       cook_prog.o listaa_kansio.o sqlite_thread.o update_thread.o nayta_ohj_vaiheet.o syota_aloita_tiedot.o \
+       comp_options.o
+
+all: demo_mx6
+
+######################### Makefile.rules section #############################
+
+######################## Tools targets section ###############################
+
+######################## Tools targets section ###############################
+
+demo_mx6: $(OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS) -o $@ $(SDL_LIBS)
